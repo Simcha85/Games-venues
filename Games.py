@@ -54,7 +54,7 @@ def count_result(Result):
         return 1
     else:
         return 1
-games_df['Event_count']=games_df.loc[:,"Result"].apply(count_result)
+games_df.loc[:,'Event_count']=games_df.loc[:,"Result"].apply(count_result)
 
 line_data=games_df['STADIUM'].value_counts()
 fig=px.line(line_data, markers=True, title='Number of Games played in each Stadium')
