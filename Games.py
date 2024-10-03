@@ -47,6 +47,15 @@ def get_kc_map():
 
 games_map=get_kc_map()
 
+def count_result(Result):
+    if Result =='Win':
+        return 1
+    if Result =='Draw':
+        return 1
+    else:
+        return 1
+games_df['Event_count']=games_df.loc[:,"Result"].apply(count_result)
+
 line_data=games_df['STADIUM'].value_counts()
 fig=px.line(line_data, markers=True, title='Number of Games played in each Stadium')
 fig.update_layout(
@@ -56,7 +65,7 @@ fig.update_layout(
 )
 st.write(fig)
 
-fig2=px.bar(games_df,x='STADIUM',y='Result',color='Result', title='Results for Each Venue')
+fig2=px.bar(games_df,x='STADIUM',y='Event_count',color='Result', title='Results for Each Venue')
 fig2.update_layout(
     showlegend=True,
     width=800,
