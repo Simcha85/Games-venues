@@ -1,9 +1,7 @@
-import folium.plugins
 import numpy as np
 import pandas as pd
 import folium
 import streamlit as st
-from folium.plugins import MarkerCluster
 import matplotlib as plt
 import plotly.express as px
 import warnings
@@ -29,15 +27,7 @@ def assign_marker_color(Result):
 games_df.loc[:,'marker_color']=games_df.loc[:,'Result'].apply(assign_marker_color)
 games_df.head()
 
-marker_cluster= MarkerCluster()
 
-sa_map.add_child(marker_cluster)
-
-for index, record in games_df.iterrows():
-    marker=folium.Marker([record['Latitude'],record['Longitude']],
-                         icon=folium.Icon(color='white', icon_color=record['marker_color']))
-    marker_cluster.add_child(marker)
-sa_map.add_child(marker_cluster)
 
 label=games_df['STADIUM']
 lats=games_df['Latitude']
@@ -58,14 +48,21 @@ def get_kc_map():
 games_map=get_kc_map()
 
 line_data=games_df['STADIUM'].value_counts()
-fig=px.line_3d(line_data, markers=True, title='Number of Games played in each Stadium')
+fig=px.line(line_data, markers=True, title='Number of Games played in each Stadium')
 fig.update_layout(
     showlegend=True,
     width=800,
     height=600
 )
-
 st.write(fig)
+
+fig2=px.bar(games_df,x='STADIUM',y='Result',color='Result', title='Results for Each Venue')
+fig2.update_layout(
+    showlegend=True,
+    width=800,
+    height=600
+              )
+st.write(fig2)
 
 with st.container():
     components.html(games_map,width =2000, height=1000)
