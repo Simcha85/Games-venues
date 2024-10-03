@@ -1,21 +1,24 @@
-import folium.plugins
 import numpy as np
 import pandas as pd
 import folium
 import streamlit as st
 from folium.plugins import MarkerCluster
+import matplotlib as plt
+import plotly.express as px
 import warnings
 
 sa_map=folium.Map(location=[-30.5595,22.9375], zoom_start=5)
 
 
 df=pd.read_excel('STADIUM info.xlsx')
-df
 
 games_df=df[['STADIUM','Result','Latitude','Longitude']]
-games_df.head()
 
-st.title("Venues used by Kaizer Chiefs in South Africa")
+st.title("Kaizer Chiefs Venues and results")
+
+stadiumdf=games_df.groupby('STADIUM').value_counts()
+
+
 
 def assign_marker_color(Result):
     if Result=='Win':
@@ -25,7 +28,7 @@ def assign_marker_color(Result):
     else:
         return 'blue'
 games_df['marker_color']=games_df['Result'].apply(assign_marker_color)
-games_df.head()
+
 
 marker_cluster= MarkerCluster()
 
@@ -37,6 +40,13 @@ for index, record in games_df.iterrows():
     marker_cluster.add_child(marker)
 sa_map.add_child(marker_cluster)
 
+label=games_df['STADIUM']
+lats=games_df['Latitude']
+long=games_df['Longitude']
+
+for lat,lng,label in zip(lats,long,label):
+    folium.Marker([lat,lng],popup=label).add_to(sa_map)
+                                                
 sa_map.save('sa_maptest.html')
 
 import streamlit.components.v1 as components
@@ -48,6 +58,15 @@ def get_kc_map():
 
 games_map=get_kc_map()
 
+line_data=games_df['STADIUM'].value_counts()
+fig=px.line(line_data, markers=True, title='Number of Games played in each Stadium')
+fig.update_layout(
+    showlegend=True,
+    width=800,
+    height=600
+)
+
+st.write(fig)
 
 with st.container():
     components.html(games_map,width =2000, height=1000)
