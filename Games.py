@@ -1,3 +1,4 @@
+import folium.plugins
 import numpy as np
 import pandas as pd
 import folium
@@ -14,11 +15,9 @@ df=pd.read_excel('STADIUM info.xlsx')
 
 games_df=df[['STADIUM','Result','Latitude','Longitude']]
 
-st.title("Kaizer Chiefs Venues and results")
-
 stadiumdf=games_df.groupby('STADIUM').value_counts()
 
-
+st.title('KAIZER CHIEFS VENUES USED IN SOUTH AFRICA')
 
 def assign_marker_color(Result):
     if Result=='Win':
@@ -27,8 +26,8 @@ def assign_marker_color(Result):
         return 'red'
     else:
         return 'blue'
-games_df['marker_color']=games_df['Result'].apply(assign_marker_color)
-
+games_df.loc[:,'marker_color']=games_df.loc[:,'Result'].apply(assign_marker_color)
+games_df.head()
 
 marker_cluster= MarkerCluster()
 
@@ -59,7 +58,7 @@ def get_kc_map():
 games_map=get_kc_map()
 
 line_data=games_df['STADIUM'].value_counts()
-fig=px.line(line_data, markers=True, title='Number of Games played in each Stadium')
+fig=px.line_3d(line_data, markers=True, title='Number of Games played in each Stadium')
 fig.update_layout(
     showlegend=True,
     width=800,
@@ -70,4 +69,3 @@ st.write(fig)
 
 with st.container():
     components.html(games_map,width =2000, height=1000)
-
