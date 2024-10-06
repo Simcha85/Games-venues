@@ -8,14 +8,14 @@ import warnings
 
 sa_map=folium.Map(location=[-30.5595,22.9375], zoom_start=5)
 
+st.title('KAIZER CHIEFS VENUES USED IN SOUTH AFRICA')
 
 df=pd.read_excel('STADIUM info.xlsx')
+df
 
 games_df=df[['STADIUM','Result','Latitude','Longitude']]
 
 stadiumdf=games_df.groupby('STADIUM').value_counts()
-
-st.title('KAIZER CHIEFS VENUES USED IN SOUTH AFRICA')
 
 def assign_marker_color(Result):
     if Result=='Win':
