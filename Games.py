@@ -51,7 +51,7 @@ fig.update_layout(
 )
 st.write(fig)
 
-fig2=px.bar(games_df,x='STADIUM',y='Result',color='Result', title='Results for Each Venue')
+fig2=px.bar(games_df,x='STADIUM',y='Event_count',color='Result', title='Results for Each Venue')
 fig2.update_layout(
     showlegend=True,
     width=800,
