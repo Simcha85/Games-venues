@@ -39,11 +39,11 @@ def count_result(Result):
         return 1
     else:
         return 1
-games_df['Event_count']=games_df.loc[:,"Result"].apply(count_result)
+games_df.loc[:,'Event_count']=games_df.loc[:,"Result"].apply(count_result)
 
 
 line_data=games_df['STADIUM'].value_counts()
-fig=px.line(line_data, markers=True, title='Number of Games played in each Stadium')
+fig=px.line(line_data,markers=True, title='Number of Games played in each Stadium')
 fig.update_layout(
     showlegend=True,
     width=800,
@@ -51,7 +51,7 @@ fig.update_layout(
 )
 st.write(fig)
 
-fig2=px.bar(games_df,x='STADIUM',y='Event_count',color='Result', title='Results for Each Venue')
+fig2=px.bar(games_df,x='STADIUM',y=['Win','Draw','Loss'], title='Results for Each Venue')
 fig2.update_layout(
     showlegend=True,
     width=800,
