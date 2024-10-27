@@ -20,7 +20,7 @@ def results(result_fig):
     st.components.v1.html(result_fig,height=600)
 
 st.title('KAIZER CHIEFS VENUES USED IN SOUTH AFRICA')
-st.logo('KC logo black back.jpg')
+st.logo('KC logo black back.jpg', link="https:/kaizerchiefs.com")
 st.image('fnb.jpg')
 st.write('This app is to show which venues Kaizer Chiefs has used in South Africa between 2017-2024, along with the result outcome for each venue. The statistics show how many home games the Club has played along with how many times they have played against each team away.')
 
