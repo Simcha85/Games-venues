@@ -1,8 +1,7 @@
 import numpy as np
 import pandas as pd
 import streamlit as st
-import plotly.express as px
-import warnings
+
 
 def stats(df):
     st.header('Data Statistics')
@@ -12,17 +11,18 @@ def headers(df):
     st.header('Data Header')
     st.write(df.tail())
 
-def games_played(games_df):
+def games_played(used_fig):
     st.header('Games Played at Each Venue')
-    st.plotly_chart(fig)
+    st.components.v1.html(used_fig,height=600)
 
-def results(games_df):
+def results(result_fig):
     st.header('Results At Venues')
-    st.plotly_chart(fig2)
+    st.components.v1.html(result_fig,height=600)
 
 st.title('KAIZER CHIEFS VENUES USED IN SOUTH AFRICA')
-st.logo('KC logo black back.jpg')
+st.logo('KC logo black back.jpg',link="https://www.kaizerchiefs.com")
 st.image('fnb.jpg')
+st.write('This app is to show which venues Kaizer Chiefs has used in South Africa between 2017-2024, along with the result outcome for each venue. The statistics show how many home games the Club has played along with how many times they have played against each team away.')
 
 st.sidebar.title('Navigation')
 
@@ -31,6 +31,7 @@ options=st.sidebar.radio('Pages', options=['Data Statistics','Data Header', 'Ven
 
 df=pd.read_excel('STADIUM info.xlsx')
 
+st.dataframe(df)
 
 def get_kc_map():
     HtmlFile=open('games_map.html','r',encoding='utf-8')
@@ -52,48 +53,23 @@ def assign_marker_color(Result):
         return 'blue'
 games_df.loc[:,'Outcome']=games_df.loc[:,'Result'].apply(assign_marker_color)
 
-def count_result(Result):
-    if Result =='Win':
-        return 1
-    if Result =='Draw':
-        return 1
-    else:
-        return 1
-games_df.loc[:,'Event_count']=games_df.loc[:,"Result"].apply(count_result)
+used = '/workspaces/Games-venues/used.html'
+resultsh = '/workspaces/Games-venues/results.html'
 
-
-line_data=games_df['STADIUM'].value_counts()
-fig=px.line(line_data,markers=True, title='Number of Games played in each Stadium')
-fig.update_layout(
-    showlegend=True,
-    width=800,
-    height=600
-)
-
-
-fig2=px.bar(games_df,x='STADIUM',y='Event_count',color='Result', title='Results for Each Venue')
-fig2.update_layout(
-    showlegend=True,
-    width=800,
-    height=600
-              )
-
-
-fig3=px.bar(df, x='Home',y='Away',color='Result')
-fig3.update_layout(
-    showlegend=True,
-    width=800,
-    height=600
-)
+with open(used,'r') as f:
+    used_fig=f.read()
+with open(resultsh,'r') as i:
+    result_fig=i.read()
 
 if options=='Data Statistics':
     stats(df)
 if options=='Venue Count':
-    games_played(games_df)
+    games_played(used_fig)
 if options=='Result Tally':
-    results(games_df)
+    results(result_fig)
 elif options=='Data Header':
     headers(df)
+
 
 import streamlit.components.v1 as components
 with st.container():
