@@ -1,7 +1,9 @@
 import numpy as np
 import pandas as pd
 import streamlit as st
+import openpyxl
 
+st.set_page_config(layout="wide")
 
 def stats(df):
     st.header('Data Statistics')
@@ -27,7 +29,7 @@ st.sidebar.title('Navigation')
 options=st.sidebar.radio('Pages', options=['Data Statistics','Data Header', 'Venue Count','Result Tally'])
 
 
-df=pd.read_excel('STADIUM info.xlsx')
+df=pd.read_csv('Stadium_info_vsc.csv')
 
 st.dataframe(df)
 
