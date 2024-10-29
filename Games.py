@@ -29,7 +29,7 @@ st.sidebar.title('Navigation')
 options=st.sidebar.radio('Pages', options=['Data Statistics','Data Header', 'Venue Count','Result Tally'])
 
 
-df=pd.read_csv('Stadium_info_vsc.csv')
+df=pd.read_excel('Stadium_info_vsc.xlsx')
 
 st.dataframe(df)
 
