@@ -1,10 +1,12 @@
 import numpy as np
 import pandas as pd
 import streamlit as st
-import openpyxl
+
+#had to remove plotly.express as it was causing an error in the deployment
 
 st.set_page_config(layout="wide")
 
+#these functions are for the buttons in the Navigation bar
 def stats(df):
     st.header('Data Statistics')
     st.write(df['Home'].value_counts())
@@ -22,6 +24,8 @@ def results(result_fig):
     st.components.v1.html(result_fig,height=600)
 
 st.title('KAIZER CHIEFS VENUES USED IN SOUTH AFRICA')
+#st.logo('KC_logo.jpg',link="https:/kaizerchiefs.com") was causing error in deployment
+#st.image('fnb.jpg')
 st.write('This app is to show which venues Kaizer Chiefs has used in South Africa between 2017-2024, along with the result outcome for each venue. The statistics show how many home games the Club has played along with how many times they have played against each team away.')
 
 st.sidebar.title('Navigation')
