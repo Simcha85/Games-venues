@@ -32,9 +32,11 @@ st.sidebar.title('Navigation')
 
 options=st.sidebar.radio('Pages', options=['Data Statistics','Data Header', 'Venue Count','Result Tally'])
 
+excel_file='Stadium_info_vsc.xlsx'
 
-df=pd.read_excel('Stadium_info_vsc.xlsx')
-del df['Unnamed: 0']
+df=pd.read_excel(excel_file,
+                 usecols='A:P',
+                 header=0)
 
 st.dataframe(df)
 
