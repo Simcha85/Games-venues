@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import streamlit as st
+import openpyxl
 from openpyxl import load_workbook
 #had to remove plotly.express as it was causing an error in the deployment
 
