@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 import streamlit as st
-
+from openpyxl import load_workbook
 #had to remove plotly.express as it was causing an error in the deployment
 
 st.set_page_config(layout="wide")
@@ -32,8 +32,12 @@ st.sidebar.title('Navigation')
 
 options=st.sidebar.radio('Pages', options=['Data Statistics','Data Header', 'Venue Count','Result Tally'])
 
+wb =load_workbook('Stadium_info_vsc.xlsx')
+ws=wb['sample']
+data=ws.values
+columns=next(data)[0:]
 
-df=pd.read_excel('Stadium_info_vsc.xlsx')
+df=pd.DataFrame(data,columns=columns)
 
 st.dataframe(df)
 
