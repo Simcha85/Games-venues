@@ -34,6 +34,7 @@ options=st.sidebar.radio('Pages', options=['Data Statistics','Data Header', 'Ven
 
 
 df=pd.read_excel('Stadium_info_vsc.xlsx')
+del df['Unnamed: 0']
 
 st.dataframe(df)
 
