@@ -24,21 +24,22 @@ def results(result_fig):
     st.components.v1.html(result_fig,height=600)
 
 st.title('KAIZER CHIEFS VENUES USED IN SOUTH AFRICA')
-#st.logo('KC_logo.jpg',link="https:/kaizerchiefs.com")
-#st.image('fnb.jpg')
+st.logo('KC_logo.jpg',link="https://kaizerchiefs.com")
+st.image('fnb.jpg')
 st.write('This app is to show which venues Kaizer Chiefs has used in South Africa between 2017-2024, along with the result outcome for each venue. The statistics show how many home games the Club has played along with how many times they have played against each team away.')
 
 st.sidebar.title('Navigation')
 
 options=st.sidebar.radio('Pages', options=['Data Statistics','Data Header', 'Venue Count','Result Tally'])
 
-excel_file='Stadium_info_vsc.xlsx'
+excel_file='Stadium_info2.csv'
 
-df=pd.read_excel(excel_file,
+df=pd.read_csv(excel_file,
                  usecols='A:P',
                  header=0)
+del df['Unnamed: 0']
 
-st.dataframe(df)
+edited_df=st.data_editor(df)
 
 def get_kc_map():
     HtmlFile=open('games_map.html','r',encoding='utf-8')
