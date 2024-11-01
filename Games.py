@@ -32,11 +32,7 @@ st.sidebar.title('Navigation')
 
 options=st.sidebar.radio('Pages', options=['Data Statistics','Data Header', 'Venue Count','Result Tally'])
 
-excel_file='Stadium_info2.csv'
-
-df=pd.read_csv(excel_file,
-                 usecols='A:P',
-                 header=0)
+df=pd.read_csv('Stadium_info2.csv')
 del df['Unnamed: 0']
 
 edited_df=st.data_editor(df)
